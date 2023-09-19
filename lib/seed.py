@@ -13,6 +13,7 @@ session = Session()
 #API for excercises
 muscles = ["biceps", "chest", "legs", "core", "back", "triceps"]
 
+#Search for the muscle I want from the API then puts all the workouts in the table
 for m in muscles:
     api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(m)
     response = requests.get(api_url, headers={'X-Api-Key': config("API_KEY")})

@@ -15,6 +15,8 @@ class User(Base):
     last_name = Column(String())
     username = Column(String())
 
+    stats = relationship('Stats', backref='user_stats')
+
 class Stats(Base):
     #should be pull up this table using someone username
     __tablename__ = 'stats'
