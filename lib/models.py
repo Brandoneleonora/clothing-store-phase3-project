@@ -27,7 +27,7 @@ class Stats(Base):
     legs = Column(Integer())
     arms = Column(Integer())
     core = Column(Integer())
-
+    user_id = Column(Integer(), ForeignKey='user.id')
 
 class Excercises(Base):
     __tablename__= 'excercises'
