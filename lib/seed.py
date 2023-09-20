@@ -11,7 +11,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 #API for excercises
-muscles = ["biceps", "chest", "legs", "core", "back", "triceps"]
+muscles = ["biceps", "chest", "quadriceps", "abdominals", "lats", "triceps", "hamstrings"]
 
 #Search for the muscle I want from the API then puts all the workouts in the table
 for m in muscles:
