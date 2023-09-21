@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import create_engine, desc
-from sqlalchemy import Column, DateTime, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, DateTime, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship 
 
 from sqlalchemy.ext.declarative import declarative_base
 engine = create_engine('sqlite:///gym.db')
@@ -16,7 +16,7 @@ class User(Base):
     last_name = Column(String())
     username = Column(String())
 
-    # stats = relationship('Stats', backref='user_stats')
+    stats = relationship('Stats', backref='user')
 
 class Stats(Base):
     #should be pull up this table using someone username
@@ -29,7 +29,7 @@ class Stats(Base):
     arms = Column(Integer())
     core = Column(Integer())
     
-    # user_id = Column(Integer(), ForeignKey='users.id')
+    users_id = Column(Integer(), ForeignKey('users.id'))
 
 class Excercises(Base):
     __tablename__= 'excercises'

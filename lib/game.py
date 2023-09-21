@@ -18,6 +18,17 @@ session = Session()
 figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
+#This is for whenever people want to view stats
+def stats():
+    #Got to have the stats of the username that is logged in 
+    print("Stats")
+
+
+
+
+
+
+
 #This works on if the user chose to click Sign up
 def sign_up():
     all_usernames=session.query(User.username).all()
@@ -59,6 +70,8 @@ def sign_up():
         optionsChoice = options[optionsIndex]
         if(optionsChoice == 'Nah not feeling it'):
             exit()
+        elif(optionsChoice == "View Stats"):
+            stats(user_name)
         elif(optionsChoice == 'Return'):
             quitting = True
     
@@ -70,6 +83,9 @@ def sign_up():
 #This is for if they choose log in
 def log_in():
     print("log_in")
+
+
+
 
 #To Start the Main Menu of the program
 def menu():
