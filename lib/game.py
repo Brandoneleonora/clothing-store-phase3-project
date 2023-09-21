@@ -15,6 +15,9 @@ session = Session()
 # cursor = conn.cursor()
 
 
+#Global Varibles needed for the funcitons
+quitting = False
+
 # Show to title of the CLI
 figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
@@ -48,8 +51,18 @@ def sign_up():
     #Takes all the information and sends it to the table 
     # session.add(new_user)
     # session.commit()
+
+
+    #The second menu after creating your user
+    options = [f"Ready to get ripped {username}","View Stats", "Quit"]
+    second_menu = TerminalMenu(options)
+
+    while quitting == False:
+        optionsIndex = second_menu.show()
+        optionsChoice = 
+        if 
     
-    #
+
 
     
 
@@ -63,7 +76,6 @@ def menu():
     options = ["Log In", "Sign Up", "Quit"]
 
     main_menu = TerminalMenu(options)
-    quitting = False
 
     while quitting == False:
         optionsIndex = main_menu.show()
