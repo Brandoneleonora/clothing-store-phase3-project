@@ -16,11 +16,8 @@ session = Session()
 figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
-#This works on if the user chose to click sign up
-
-
-#Getting the CLI menu started
-if __name__ == '__main__':
+#To Start the Main Menu of the program
+def menu():
     options = ["Log In", "Sign Up", "Quit"]
 
     main_menu = TerminalMenu(options)
@@ -29,12 +26,18 @@ if __name__ == '__main__':
     while quitting == False:
         optionsIndex = main_menu.show()
         optionsChoice = options[optionsIndex]
-
         if(optionsChoice == 'Quit'):
             quitting = True
         else:
-            print(optionsChoice)
+            print('hello')
 
+#This works on if the user chose to click Sign up
+
+
+#Getting the CLI menu started
+if __name__ == '__main__':
+    menu()
     
+
 
 
