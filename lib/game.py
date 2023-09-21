@@ -5,11 +5,14 @@ from decouple import config
 from models import User, Stats, Excercises
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
+import sqlite3
 
 #To be able to communicate with the database
 engine = create_engine('sqlite:///gym.db')
 Session = sessionmaker(bind=engine)
 session = Session()
+# conn = sqlite3.connect('gym.db')
+# cursor = conn.cursor()
 
 
 # Show to title of the CLI
@@ -18,7 +21,36 @@ print(figlet.renderText("Gym Simulator"))
 
 #This works on if the user chose to click Sign up
 def sign_up():
-    print("sign_up")
+    print(session.query(User.username).all())
+
+    #Retrieve the Users information
+    firstname = input("First Name:")
+    lastname = input("Last Name:")
+    
+    #This checks to see if the username is in the system
+    usr = True
+
+    while usr == True:
+        user_name = input("Username:")
+
+    new_user = User(
+        first_name = firstname,
+        last_name = lastname,
+        username = user_name
+    )
+
+    
+
+
+
+
+    #Takes all the information and sends it to the table 
+    session.add(new_user)
+    session.commit()
+    #Should check through the usernames in the User table for no duplicates
+
+    #If the username is already there the input should keep trying to ask for a username 
+
 
 #This is for if they choose log in
 def log_in():
