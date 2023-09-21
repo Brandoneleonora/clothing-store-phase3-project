@@ -21,17 +21,23 @@ print(figlet.renderText("Gym Simulator"))
 
 #This works on if the user chose to click Sign up
 def sign_up():
-    print(session.query(User.username).all())
+    all_usernames=session.query(User.username).all()
 
     #Retrieve the Users information
     firstname = input("First Name:")
     lastname = input("Last Name:")
-    
+
     #This checks to see if the username is in the system
     usr = True
 
     while usr == True:
         user_name = input("Username:")
+        #iterate over the username
+        for n in all_usernames:
+        if user_name == n[0]:
+            print("Sorry, to slow name was already taken!!!")
+        else:
+            usr = False
 
     new_user = User(
         first_name = firstname,
@@ -39,17 +45,13 @@ def sign_up():
         username = user_name
     )
 
-    
-
-
-
-
     #Takes all the information and sends it to the table 
-    session.add(new_user)
-    session.commit()
-    #Should check through the usernames in the User table for no duplicates
+    # session.add(new_user)
+    # session.commit()
+    
+    #
 
-    #If the username is already there the input should keep trying to ask for a username 
+    
 
 
 #This is for if they choose log in
