@@ -5,18 +5,14 @@ from decouple import config
 from models import User, Stats, Excercises
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
-import sqlite3
+import sys, subprocess
 
 #To be able to communicate with the database
 engine = create_engine('sqlite:///gym.db')
 Session = sessionmaker(bind=engine)
 session = Session()
-# conn = sqlite3.connect('gym.db')
-# cursor = conn.cursor()
 
 
-#Global Varibles needed for the funcitons
-quitting = False
 
 # Show to title of the CLI
 figlet = Figlet(font='slant')
@@ -37,10 +33,10 @@ def sign_up():
         user_name = input("Username:")
         #iterate over the username
         for n in all_usernames:
-        if user_name == n[0]:
-            print("Sorry, to slow name was already taken!!!")
-        else:
-            usr = False
+            if user_name == n[0]:
+                print("Sorry, to slow name was already taken!!!")
+            else:
+                usr = False
 
     new_user = User(
         first_name = firstname,
@@ -54,13 +50,17 @@ def sign_up():
 
 
     #The second menu after creating your user
-    options = [f"Ready to get ripped {username}","View Stats", "Quit"]
+    quitting = False
+    options = [f"Ready to get ripped {user_name}","View Stats","Return" ,"Nah not feeling it"]
     second_menu = TerminalMenu(options)
 
     while quitting == False:
         optionsIndex = second_menu.show()
-        optionsChoice = 
-        if 
+        optionsChoice = options[optionsIndex]
+        if(optionsChoice == 'Nah not feeling it'):
+            exit()
+        elif(optionsChoice == 'Return'):
+            quitting = True
     
 
 
@@ -74,7 +74,7 @@ def log_in():
 #To Start the Main Menu of the program
 def menu():
     options = ["Log In", "Sign Up", "Quit"]
-
+    quitting = False
     main_menu = TerminalMenu(options)
 
     while quitting == False:
