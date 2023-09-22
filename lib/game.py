@@ -19,9 +19,12 @@ figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
 #This is for whenever people want to view stats
-def stats():
+def stats(usr):
+    
+
+    print(usr)
     #Got to have the stats of the username that is logged in 
-    print("Stats")
+    
 
 
 
@@ -82,7 +85,32 @@ def sign_up():
 
 #This is for if they choose log in
 def log_in():
-    print("log_in")
+    all_usernames=session.query(User.username).all()
+    quitting = False
+    options = ["Start Getting Ripped", "View Stats","Return" ,"Nah not feeling it"]
+    third_menu = TerminalMenu(options)
+    usr = True
+
+    while usr == True:
+        user_name = input("Username:")
+        #iterate over the username
+        for n in all_usernames:
+            if user_name == n[0]:
+                print(f"Welcome Back, {user_name}!!!")
+                while quitting == False:
+                    optionsIndex = third_menu.show()
+                    optionsChoice = options[optionsIndex]
+                    if(optionsChoice == 'Nah not feeling it'):
+                        exit()
+                    elif(optionsChoice == "View Stats"):
+                        stats(user_name)
+                    elif(optionsChoice == 'Return'):
+                        quitting = True
+                        usr = False
+            else:
+                usr = False
+                print("Need an Account")
+                sign_up()
 
 
 
