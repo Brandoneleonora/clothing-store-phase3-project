@@ -19,7 +19,25 @@ figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
 
+# For the chest workout
+def chest():
+    #This is to retrive the excercise based on the type chosen
+    chest_excercises = session.query(Excercises).filter(Excercises.type == 'Chest').all()
+    print(chest_excercises)
+    
+    #To be able to chose the excercise
+    quitting = False
+    chest_options = ["Return", "Not feeling it"]
+    chest_menu = TerminalMenu(chest_options)
 
+    while quitting == False:
+        index = chest_menu.show()
+        index_choice = chest_options[index]
+ 
+        if index_choice == 'Nah not feeling it':
+            exit()
+        elif index_choice == 'Return':
+            quitting = True
 
 
 #This will be to begin working out
@@ -33,7 +51,19 @@ def start_workout(usr):
     while quitting == False:
         optionsIndex = start_menu.show()
         optionsChoice = options[optionsIndex]
-        if optionsChoice == 'Nah not feeling it':
+        if optionsChoice == "Chest":
+            chest()
+        elif optionsChoice == "Lats":
+            pass
+        elif optionsChoice == "Triceps":
+            pass
+        elif optionsChoice == "Bicep":
+            pass
+        elif optionsChoice == "Quadriceps":
+            pass
+        elif optionsChoice == "Hamstrings":    
+            pass
+        elif optionsChoice == 'Nah not feeling it':
             exit()
         elif optionsChoice == "View Stats":
             stats(usr)
