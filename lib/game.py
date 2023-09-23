@@ -57,7 +57,13 @@ def start_workout():
 def stats(usr):
     user = session.query(User).filter(User.username == usr).first()
 
-    print(user.stats)
+    print(f"Chest: { user.stats[0].chest}")
+    print(f"Hamstrings: { user.stats[0].hamstrings}")
+    print(f"Lats: { user.stats[0].lats}")
+    print(f"Triceps: { user.stats[0].triceps}")
+    print(f"Biceps: { user.stats[0].biceps}")
+    print(f"Abdominals: { user.stats[0].abdominals}")
+    print(f"Quadriceps: { user.stats[0].quadriceps}")
     #Got to have the stats of the username that is logged in 
     
 
@@ -101,8 +107,11 @@ def sign_up():
     #Takes all the information and sends it to the table 
     session.add_all([new_user, new_stats])
     session.commit()
-    # user_name.stats.append(new_stats)
-    # session.commit()
+
+    #Retrieve the user just created and then give them new stats
+    user_stats = session.query(User).filter(User.username == user_name).first()
+    user_stats.stats.append(new_stats)
+    session.commit()
 
 
     #The second menu after creating your user
