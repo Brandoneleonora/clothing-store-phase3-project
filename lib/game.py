@@ -23,33 +23,22 @@ print(figlet.renderText("Gym Simulator"))
 
 
 #This will be to begin working out
-def start_workout():
+def start_workout(usr):
+
+    
     quitting = False
-    options = ["Chest", "Back", "Triceps", "Bicep", "Quadriceps", "Hamstrings","Start Getting Ripped", "View Stats","Return" ,"Nah not feeling it"]
-    third_menu = TerminalMenu(options)
-    usr = True
+    options = ["Chest", "Lats", "Triceps", "Bicep", "Quadriceps", "Hamstrings", "View Stats","Return" ,"Nah not feeling it"]
+    start_menu = TerminalMenu(options)
 
-    while usr == True:
-        user_name = input("Username:")
-        #iterate over the username
-        for n in all_usernames:
-            if user_name == n[0]:
-                print(f"Welcome Back, {user_name}!!!")
-                while quitting == False:
-                    optionsIndex = third_menu.show()
-                    optionsChoice = options[optionsIndex]
-                    if(optionsChoice == 'Nah not feeling it'):
-                        exit()
-                    elif(optionsChoice == "View Stats"):
-                        stats(user_name)
-                    elif(optionsChoice == 'Return'):
-                        quitting = True
-                        usr = False
-            else:
-                usr = False
-                print("Need an Account")
-                sign_up()
-
+    while quitting == False:
+        optionsIndex = start_menu.show()
+        optionsChoice = options[optionsIndex]
+        if optionsChoice == 'Nah not feeling it':
+            exit()
+        elif optionsChoice == "View Stats":
+            stats(usr)
+        elif optionsChoice == 'Return':
+            quitting = True
 
 
 
@@ -122,7 +111,9 @@ def sign_up():
     while quitting == False:
         optionsIndex = second_menu.show()
         optionsChoice = options[optionsIndex]
-        if(optionsChoice == 'Nah not feeling it'):
+        if optionsChoice == f"Ready to get ripped {user_name}":
+            start_workout(user_name)
+        elif(optionsChoice == 'Nah not feeling it'):
             exit()
         elif(optionsChoice == "View Stats"):
             stats(user_name)
@@ -152,7 +143,9 @@ def log_in():
             while quitting == False:
                 optionsIndex = third_menu.show()
                 optionsChoice = options[optionsIndex]
-                if(optionsChoice == 'Nah not feeling it'):
+                if optionsChoice == "Start Getting Ripped":
+                    start_workout(user_name)
+                elif(optionsChoice == 'Nah not feeling it'):
                     exit()
                 elif(optionsChoice == "View Stats"):
                     stats(user_name)
