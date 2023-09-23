@@ -18,18 +18,59 @@ session = Session()
 figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
+
+
+
+
+#This will be to begin working out
+def start_workout():
+    quitting = False
+    options = ["Chest", "Back", "Triceps", "Bicep", "Quadriceps", "Hamstrings","Start Getting Ripped", "View Stats","Return" ,"Nah not feeling it"]
+    third_menu = TerminalMenu(options)
+    usr = True
+
+    while usr == True:
+        user_name = input("Username:")
+        #iterate over the username
+        for n in all_usernames:
+            if user_name == n[0]:
+                print(f"Welcome Back, {user_name}!!!")
+                while quitting == False:
+                    optionsIndex = third_menu.show()
+                    optionsChoice = options[optionsIndex]
+                    if(optionsChoice == 'Nah not feeling it'):
+                        exit()
+                    elif(optionsChoice == "View Stats"):
+                        stats(user_name)
+                    elif(optionsChoice == 'Return'):
+                        quitting = True
+                        usr = False
+            else:
+                usr = False
+                print("Need an Account")
+                sign_up()
+
+
+
+
 #This is for whenever people want to view stats
 def stats(usr):
-    
+    user = session.query(User).filter(User.username == usr).first()
 
-    print(usr)
+    print(user.stats)
+
+    new_stats = 
+        chest = 0,
+        lats = 0,
+        triceps = 0,
+        biceps = 0,
+        abdominals = 0,
+        quadriceps = 0,
+        hangstrings = 0
+
+    print(new_stats)
     #Got to have the stats of the username that is logged in 
     
-
-
-
-
-
 
 
 #This works on if the user chose to click Sign up
@@ -44,23 +85,31 @@ def sign_up():
     usr = True
 
     while usr == True:
+
         user_name = input("Username:")
         #iterate over the username
-        for n in all_usernames:
-            if user_name == n[0]:
-                print("Sorry, to slow name was already taken!!!")
-            else:
-                usr = False
+        if all_usernames == []:
+            usr = False
+        else:
+            for n in all_usernames:
+                if user_name == n[0]:
+                    print("Sorry, to slow name was already taken!!!")
+                elif n == []:
+                    usr = False
+                else:
+                    usr = False
 
+        
     new_user = User(
         first_name = firstname,
         last_name = lastname,
-        username = user_name
+        username = user_name,
+        stats =
     )
-
+ 
     #Takes all the information and sends it to the table 
-    # session.add(new_user)
-    # session.commit()
+    session.add(new_user)
+    session.commit()
 
 
     #The second menu after creating your user
@@ -94,23 +143,28 @@ def log_in():
     while usr == True:
         user_name = input("Username:")
         #iterate over the username
-        for n in all_usernames:
-            if user_name == n[0]:
-                print(f"Welcome Back, {user_name}!!!")
-                while quitting == False:
-                    optionsIndex = third_menu.show()
-                    optionsChoice = options[optionsIndex]
-                    if(optionsChoice == 'Nah not feeling it'):
-                        exit()
-                    elif(optionsChoice == "View Stats"):
-                        stats(user_name)
-                    elif(optionsChoice == 'Return'):
-                        quitting = True
-                        usr = False
-            else:
-                usr = False
-                print("Need an Account")
-                sign_up()
+        if all_usernames == []:
+            usr = False
+            print("Need to Create an Account")
+            sign_up()            
+        else:
+            for n in all_usernames:
+                if user_name == n[0]:
+                    print(f"Welcome Back, {user_name}!!!")
+                    while quitting == False:
+                        optionsIndex = third_menu.show()
+                        optionsChoice = options[optionsIndex]
+                        if(optionsChoice == 'Nah not feeling it'):
+                            exit()
+                        elif(optionsChoice == "View Stats"):
+                            stats(user_name)
+                        elif(optionsChoice == 'Return'):
+                            quitting = True
+                            usr = False
+                else:
+                    usr = False
+                    print("Need an Account")
+                    sign_up()
 
 
 

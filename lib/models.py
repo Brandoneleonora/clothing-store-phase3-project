@@ -24,12 +24,14 @@ class Stats(Base):
 
     id = Column(Integer(), primary_key=True)
     chest = Column(Integer())
-    back = Column(Integer())
-    legs = Column(Integer())
-    arms = Column(Integer())
-    core = Column(Integer())
+    lats = Column(Integer())
+    triceps = Column(Integer())
+    biceps = Column(Integer())
+    abdominals = Column(Integer())
+    quadriceps = Column(Integer())
+    hamstrings = Column(Integer())
     
-    users_id = Column(Integer(), ForeignKey('users.id'))
+    user_id = Column(Integer(), ForeignKey('users.id'))
 
 class Excercises(Base):
     __tablename__= 'excercises'
