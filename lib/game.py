@@ -20,10 +20,14 @@ print(figlet.renderText("Gym Simulator"))
 
 
 # For the chest workout
-def chest():
+def chest(chosen_workout):
     #This is to retrive the excercise based on the type chosen
-    chest_excercises = session.query(Excercises).filter(Excercises.type == 'Chest').all()
-    print(chest_excercises)
+    chest_excercises = session.query(Excercises).filter(Excercises.type == chosen_workout.lower()).all()
+
+    print(chest_excercises[0].name)
+    print(chest_excercises[0].type)
+    
+
     
     #To be able to chose the excercise
     quitting = False
@@ -34,7 +38,7 @@ def chest():
         index = chest_menu.show()
         index_choice = chest_options[index]
  
-        if index_choice == 'Nah not feeling it':
+        if index_choice == 'Not feeling it':
             exit()
         elif index_choice == 'Return':
             quitting = True
@@ -52,7 +56,7 @@ def start_workout(usr):
         optionsIndex = start_menu.show()
         optionsChoice = options[optionsIndex]
         if optionsChoice == "Chest":
-            chest()
+            chest(optionsChoice)
         elif optionsChoice == "Lats":
             pass
         elif optionsChoice == "Triceps":
