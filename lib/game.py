@@ -19,29 +19,51 @@ figlet = Figlet(font='slant')
 print(figlet.renderText("Gym Simulator"))
 
 
-# For the chest workout
-def chest(chosen_workout):
-    #This is to retrive the excercise based on the type chosen
-    chest_excercises = session.query(Excercises).filter(Excercises.type == chosen_workout.lower()).all()
+#This would be for once you click a workout you will have the option to do it and instructions if needed
+def last_menu(c):
+    search_excercises = session.query(Excercises.instructions).filter(Excercises.name == c).first()
 
-    print(chest_excercises[0].name)
-    print(chest_excercises[0].type)
-    
-
-    
-    #To be able to chose the excercise
+    print(search_excercises)
     quitting = False
-    chest_options = ["Return", "Not feeling it"]
-    chest_menu = TerminalMenu(chest_options)
+    options = ["Do the Workout", "Instructions", "Return", "Not feeling it"]
+    last_menu = TerminalMenu(options)
 
     while quitting == False:
-        index = chest_menu.show()
-        index_choice = chest_options[index]
- 
+        index = last_menu.show()
+        index_choice = options[index]
+
         if index_choice == 'Not feeling it':
             exit()
         elif index_choice == 'Return':
             quitting = True
+
+
+# For the chest workout
+def excercise_display(chosen_workout):
+    #This is to retrive the excercise based on the type chosen
+    search_excercises = session.query(Excercises).filter(Excercises.type == chosen_workout.lower()).all()
+
+    #To be able to chose the excercise
+    quitting = False
+    options = []
+    for e in search_excercises:
+        options.append(e.name)
+    options.append("Return")
+    options.append("Not feeling it")
+    menu = TerminalMenu(options)
+
+    while quitting == False:
+        index = menu.show()
+        index_choice = options[index]
+        for ex in options:
+            if ex == index_choice:
+                last_menu(ex)
+            elif index_choice == 'Not feeling it':
+                exit()
+            elif index_choice == 'Return':
+                quitting = True
+
+
 
 
 #This will be to begin working out
@@ -49,24 +71,24 @@ def start_workout(usr):
 
     
     quitting = False
-    options = ["Chest", "Lats", "Triceps", "Bicep", "Quadriceps", "Hamstrings", "View Stats","Return" ,"Nah not feeling it"]
+    options = ["Chest", "Lats", "Triceps", "Biceps", "Quadriceps", "Hamstrings", "View Stats","Return" ,"Nah not feeling it"]
     start_menu = TerminalMenu(options)
 
     while quitting == False:
         optionsIndex = start_menu.show()
         optionsChoice = options[optionsIndex]
         if optionsChoice == "Chest":
-            chest(optionsChoice)
+            excercise_display(optionsChoice)
         elif optionsChoice == "Lats":
-            pass
+            excercise_display(optionsChoice)
         elif optionsChoice == "Triceps":
-            pass
-        elif optionsChoice == "Bicep":
-            pass
+            excercise_display(optionsChoice)
+        elif optionsChoice == "Biceps":
+            excercise_display(optionsChoice)
         elif optionsChoice == "Quadriceps":
-            pass
+            excercise_display(optionsChoice)
         elif optionsChoice == "Hamstrings":    
-            pass
+            excercise_display(optionsChoice)
         elif optionsChoice == 'Nah not feeling it':
             exit()
         elif optionsChoice == "View Stats":
