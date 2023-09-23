@@ -58,17 +58,6 @@ def stats(usr):
     user = session.query(User).filter(User.username == usr).first()
 
     print(user.stats)
-
-    new_stats = 
-        chest = 0,
-        lats = 0,
-        triceps = 0,
-        biceps = 0,
-        abdominals = 0,
-        quadriceps = 0,
-        hangstrings = 0
-
-    print(new_stats)
     #Got to have the stats of the username that is logged in 
     
 
@@ -76,40 +65,44 @@ def stats(usr):
 #This works on if the user chose to click Sign up
 def sign_up():
     all_usernames=session.query(User.username).all()
-
+   
     #Retrieve the Users information
     firstname = input("First Name:")
     lastname = input("Last Name:")
 
     #This checks to see if the username is in the system
-    usr = True
+    user_name = input("Username:")
 
-    while usr == True:
-
-        user_name = input("Username:")
-        #iterate over the username
-        if all_usernames == []:
-            usr = False
+    #iterate over the username
+    if all_usernames == []:
+        pass
+    else:
+        if any([ user_name in i for i in all_usernames]):
+            print("Sorry, to slow name was already taken!!!")
+            user_name = input("Username:")
         else:
-            for n in all_usernames:
-                if user_name == n[0]:
-                    print("Sorry, to slow name was already taken!!!")
-                elif n == []:
-                    usr = False
-                else:
-                    usr = False
-
+            pass
         
+    new_stats = Stats( 
+        chest = 0,
+        lats = 0,
+        triceps = 0,
+        biceps = 0,
+        abdominals = 0,
+        quadriceps = 0,
+        hamstrings = 0
+    )
     new_user = User(
         first_name = firstname,
         last_name = lastname,
         username = user_name,
-        stats =
     )
  
     #Takes all the information and sends it to the table 
-    session.add(new_user)
+    session.add_all([new_user, new_stats])
     session.commit()
+    # user_name.stats.append(new_stats)
+    # session.commit()
 
 
     #The second menu after creating your user
@@ -138,33 +131,27 @@ def log_in():
     quitting = False
     options = ["Start Getting Ripped", "View Stats","Return" ,"Nah not feeling it"]
     third_menu = TerminalMenu(options)
-    usr = True
 
-    while usr == True:
-        user_name = input("Username:")
-        #iterate over the username
-        if all_usernames == []:
-            usr = False
-            print("Need to Create an Account")
-            sign_up()            
+    user_name = input("Username:")
+    #iterate over the username
+    if all_usernames == []:    
+        print("Need to Create an Account")
+        sign_up()            
+    else:
+        if any([ user_name in i for i in all_usernames]):
+            print(f"Welcome Back, {user_name}!!!")
+            while quitting == False:
+                optionsIndex = third_menu.show()
+                optionsChoice = options[optionsIndex]
+                if(optionsChoice == 'Nah not feeling it'):
+                    exit()
+                elif(optionsChoice == "View Stats"):
+                    stats(user_name)
+                elif(optionsChoice == 'Return'):
+                    quitting = True
         else:
-            for n in all_usernames:
-                if user_name == n[0]:
-                    print(f"Welcome Back, {user_name}!!!")
-                    while quitting == False:
-                        optionsIndex = third_menu.show()
-                        optionsChoice = options[optionsIndex]
-                        if(optionsChoice == 'Nah not feeling it'):
-                            exit()
-                        elif(optionsChoice == "View Stats"):
-                            stats(user_name)
-                        elif(optionsChoice == 'Return'):
-                            quitting = True
-                            usr = False
-                else:
-                    usr = False
-                    print("Need an Account")
-                    sign_up()
+            print("Need to Create an Account")
+            sign_up()        
 
 
 
