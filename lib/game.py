@@ -20,26 +20,48 @@ print(figlet.renderText("Gym Simulator"))
 
 
 #This would be for once you click a workout you will have the option to do it and instructions if needed
-def last_menu(c):
-    search_excercises = session.query(Excercises.instructions).filter(Excercises.name == c).first()
+def last_menu(c, usr):
+    search_excercises = session.query(Excercises).filter(Excercises.name == c).first()
+    user = session.query(User).filter(User.username == usr).first()
 
-    print(search_excercises)
+
+
+    stat_number = getattr(user.stats[0], search_excercises.type)
     quitting = False
-    options = ["Do the Workout", "Instructions", "Return", "Not feeling it"]
-    last_menu = TerminalMenu(options)
+    last_options = ["Do the Workout", "Instructions","View Stats", "Return", "Not feeling it"]
+    last_menu = TerminalMenu(last_options)
 
     while quitting == False:
         index = last_menu.show()
-        index_choice = options[index]
-
-        if index_choice == 'Not feeling it':
+        index_choice = last_options[index]
+        if index_choice == "Instructions":
+            print(search_excercises.instructions)
+        elif index_choice == "Do the Workout":
+            print(f"You're {search_excercises.type} is getting stronger")
+            stat_number += 1
+            if search_excercises.type == 'chest':
+                user.stats[0].chest = stat_number
+            elif search_excercises.type == 'lats':
+                user.stats[0].lats = stat_number
+            elif search_excercises.type == 'triceps':
+                user.stats[0].triceps = stat_number
+            elif search_excercises.type == 'biceps':
+                user.stats[0].biceps = stat_number
+            elif search_excercises.type == 'quadriceps':
+                user.stats[0].quadriceps = stat_number
+            else:
+                user.stats[0].hamstrings = stat_number
+            session.commit()
+        elif index_choice == 'Not feeling it':
             exit()
-        elif index_choice == 'Return':
+        elif index_choice == "View Stats":
+            stats(usr)
+        else:
             quitting = True
 
 
 # For the chest workout
-def excercise_display(chosen_workout):
+def excercise_display(chosen_workout,usr):
     #This is to retrive the excercise based on the type chosen
     search_excercises = session.query(Excercises).filter(Excercises.type == chosen_workout.lower()).all()
 
@@ -56,8 +78,8 @@ def excercise_display(chosen_workout):
         index = menu.show()
         index_choice = options[index]
         for ex in options:
-            if ex == index_choice:
-                last_menu(ex)
+            if (ex == index_choice and ex != 'Return'):
+                last_menu(ex, usr)
             elif index_choice == 'Not feeling it':
                 exit()
             elif index_choice == 'Return':
@@ -78,17 +100,17 @@ def start_workout(usr):
         optionsIndex = start_menu.show()
         optionsChoice = options[optionsIndex]
         if optionsChoice == "Chest":
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == "Lats":
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == "Triceps":
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == "Biceps":
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == "Quadriceps":
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == "Hamstrings":    
-            excercise_display(optionsChoice)
+            excercise_display(optionsChoice, usr)
         elif optionsChoice == 'Nah not feeling it':
             exit()
         elif optionsChoice == "View Stats":
