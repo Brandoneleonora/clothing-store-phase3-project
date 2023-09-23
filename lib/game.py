@@ -129,7 +129,6 @@ def stats(usr):
     print(f"Lats: { user.stats[0].lats}")
     print(f"Triceps: { user.stats[0].triceps}")
     print(f"Biceps: { user.stats[0].biceps}")
-    print(f"Abdominals: { user.stats[0].abdominals}")
     print(f"Quadriceps: { user.stats[0].quadriceps}")
     #Got to have the stats of the username that is logged in 
     
