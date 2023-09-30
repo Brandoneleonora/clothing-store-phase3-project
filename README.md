@@ -13,7 +13,11 @@ pipenv shell
 
 ## Project Instructions
 
-You need to run python lib/game.py inside of your terminal to get the start of the CLI.
+You need to run the line below inside of your terminal to get the start of the CLI.
+
+```bash
+python lib/game.py
+```
 
 Next you will be giving options as if it was a menu and you can use the arrows and the enter key.
 
